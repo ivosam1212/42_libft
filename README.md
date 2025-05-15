@@ -25,3 +25,4 @@ Here are the available functions created in the library:
 - ft_memcmp
 - ft_strnstr
 - ft_atoi
+- ft_strdup
