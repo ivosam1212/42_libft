@@ -6,7 +6,7 @@
 /*   By: isam-alv <isam-alv@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:41:45 by isam-alv          #+#    #+#             */
-/*   Updated: 2025/05/16 18:42:32 by isam-alv         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:38:20 by isam-alv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,70 @@ void	ft_bzero_test(void)
 	printf("Original: %s\n", buffer);
 }
 
+void	ft_memcpy_test(void)
+{
+	char	dst[50];
+	char	*src;
+	size_t	n;
+
+	src = "Hola como estas?";
+	n = 10;
+	printf("\nTest for ft_memcpy.\n");
+	printf("Copying \"Hola como estas?\" only by 5 bytes: %s ", ((char *)ft_memcpy(dst, src, n)));
+	printf("Original: %s\n", ((char *)memcpy(dst, src, n)));
+}
+
+void	ft_memmove_test(void)
+{
+    char buffer[50];
+    char buffer2[50];
+    char *src;
+    size_t n;
+    
+    // Test 1: Basic non-overlapping case (similar to memcpy)
+    src = "Hola como estas?";
+    n = 10;
+    printf("\nTest 1 for ft_memmove - Basic non-overlapping:\n");
+    printf("ft_memmove: %.*s\n", (int)n, (char *)ft_memmove(buffer, src, n));
+    printf("memmove:    %.*s\n", (int)n, (char *)memmove(buffer2, src, n));
+    
+    // Test 2: Overlapping case - source before destination
+    strcpy(buffer, "Hola como estas?");
+    printf("\nTest 2 for ft_memmove - Overlapping (src before dest):\n");
+    printf("Original:   %s\n", buffer);
+    printf("ft_memmove: %s\n", (char *)ft_memmove(buffer + 5, buffer, 10));
+    
+    // Reset buffer for comparison with standard memmove
+    strcpy(buffer, "Hola como estas?");
+    printf("memmove:    %s\n", (char *)memmove(buffer + 5, buffer, 10));
+    
+    // Test 3: Overlapping case - destination before source
+    strcpy(buffer, "Hola como estas?");
+    printf("\nTest 3 for ft_memmove - Overlapping (dest before src):\n");
+    printf("Original:   %s\n", buffer);
+    printf("ft_memmove: %s\n", (char *)ft_memmove(buffer, buffer + 5, 10));
+    
+    // Reset buffer for comparison with standard memmove
+    strcpy(buffer, "Hola como estas?");
+    printf("memmove:    %s\n", (char *)memmove(buffer, buffer + 5, 10));
+    
+    // Test 4: Zero-length move
+    strcpy(buffer, "Hola como estas?");
+    printf("\nTest 4 for ft_memmove - Zero-length move:\n");
+    printf("Original:   %s\n", buffer);
+    printf("ft_memmove: %s\n", (char *)ft_memmove(buffer + 5, buffer, 0));
+    
+    // Reset buffer for comparison with standard memmove
+    strcpy(buffer, "Hola como estas?");
+    printf("memmove:    %s\n", (char *)memmove(buffer + 5, buffer, 0));
+    
+    // Test 5: Handle NULL pointers (only for ft_memmove)
+    printf("\nTest 5 for ft_memmove - NULL pointers with n=0:\n");
+    printf("ft_memmove with NULL: %p\n", ft_memmove(NULL, NULL, 0));
+    // Skip testing system memmove with NULL due to compiler warnings
+    printf("Note: System memmove test with NULL skipped due to compiler warnings\n");
+}
+
 int	main(void)
 {
 	ft_isalpha_test();
@@ -135,5 +199,7 @@ int	main(void)
 	ft_strlen_test();
 	ft_memset_test();
 	ft_bzero_test();
+	ft_memcpy_test();
+	ft_memmove_test();
 	return (0);
 }
